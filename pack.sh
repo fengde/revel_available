@@ -24,11 +24,9 @@ function build() {
 
 function pack() {
     build
-    version="last"
     file_dir="$app"
-    timestamp=`date +%s`
-    echo "...tar $file_dir-$version-$timestamp.tar.gz <= $file_dir"
-    tar -zcvf - $file_dir
+    echo "tar $file_dir.tar.gz <= $file_dir"
+    tar -zcf $file_dir.tar.gz $file_dir
     rm -fr $file_dir
 }
 
