@@ -43,9 +43,16 @@ func (p *Base) Before() revel.Result {
 		p.Cookie[item.Name] = item.Value
 	}
 
+	remoteAddr := p.Request.RemoteAddr
+	if value, ok := p.Request.Header["X-Real-Ip"]; ok {
+		if len(value) > 0 {
+			remoteAddr = value[0]
+		}
+	}
+
 	global.Logger.Info(strings.Repeat("*", 100))
 	global.Logger.Info("%v  %v  %v  %v", p.Request.Proto, p.Request.Method,
-		p.Request.RequestURI, p.Request.Host)
+		p.Request.RequestURI, remoteAddr)
 	global.Logger.Info("%v", p.Request.Header)
 	global.Logger.Info("传入的Cookie:%v", p.Cookie)
 	global.Logger.Info("传入参数:%v", p.In)
